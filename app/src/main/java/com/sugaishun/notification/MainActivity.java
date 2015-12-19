@@ -1,10 +1,13 @@
 package com.sugaishun.notification;
 
+import android.annotation.TargetApi;
 import android.app.NotificationManager;
+import android.app.PendingIntent;
 import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
+import android.os.Build;
 import android.os.Bundle;
 import android.service.notification.StatusBarNotification;
 import android.support.v4.app.NotificationCompat;
@@ -12,6 +15,8 @@ import android.support.v7.app.ActionBarActivity;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
+import android.widget.AdapterView;
 import android.widget.BaseAdapter;
 import android.widget.ListView;
 
@@ -42,9 +47,16 @@ public class MainActivity extends ActionBarActivity {
         setContentView(R.layout.activity_main);
 
         ListView listView = (ListView) findViewById(R.id.listView);
-        List<StatusBarNotification> notifications = NotificationRecorderService.getNotifications();
+        final List<StatusBarNotification> notifications = NotificationRecorderService.getNotifications();
         mAadpter = new NotificationListAdapter(getApplicationContext(), notifications);
         listView.setAdapter(mAadpter);
+        listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                StatusBarNotification sbn = notifications.get(position);
+                sendNotificationIntent(sbn);
+            }
+        });
     }
 
     @Override
@@ -82,10 +94,34 @@ public class MainActivity extends ActionBarActivity {
         return new Intent(MainActivity.ACTION_UPDATE);
     }
 
+    @TargetApi(Build.VERSION_CODES.JELLY_BEAN_MR2)
+    private void sendNotificationIntent(StatusBarNotification sbn) {
+        PendingIntent pendingIntent = sbn.getNotification().contentIntent;
+        if (pendingIntent == null) {
+            Log.d(TAG, "pending intent is not set");
+            return;
+        }
+        Intent intent = new Intent();
+        try {
+            pendingIntent.send(MainActivity.this, 0, intent);
+        } catch (PendingIntent.CanceledException e) {
+            Log.w(TAG, "failed", e);
+        }
+    }
+
     private int notificationId;
 
     private void sendNotification() {
+        Intent resultIntent = new Intent(android.provider.Settings.ACTION_SETTINGS);
+        PendingIntent resultPendingIntent =
+                PendingIntent.getActivity(
+                        this,
+                        0,
+                        resultIntent,
+                        PendingIntent.FLAG_UPDATE_CURRENT
+                );
         NotificationCompat.Builder builder = new NotificationCompat.Builder(this)
+                .setContentIntent(resultPendingIntent)
                 .setSmallIcon(android.R.drawable.ic_menu_more)
                 .setContentTitle("My notification My notification My notification My notification My notification")
                 .setContentText("Hello World! Hello World! Hello World! Hello World! Hello World! Hello World!" + notificationId);
