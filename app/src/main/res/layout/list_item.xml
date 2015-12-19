@@ -1,28 +1,40 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:orientation="vertical" android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:paddingBottom="11dp"
+    android:paddingLeft="16dp"
+    android:paddingRight="16dp"
+    android:paddingTop="11dp">
 
     <ImageView
+        android:id="@+id/listItemIcon"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:id="@+id/listItemIcon" />
+        android:contentDescription="@string/row_icon_desc" />
 
     <TextView
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
         android:id="@+id/listItemTitle"
-        android:layout_alignParentTop="true"
-        android:textSize="@dimen/abc_text_size_medium_material"
-        android:layout_toEndOf="@+id/listItemIcon"
-        android:layout_marginStart="50dp"
-        android:textColor="@android:color/black" />
-
-    <TextView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_alignParentTop="true"
+        android:layout_marginStart="10dp"
+        android:layout_toEndOf="@+id/listItemIcon"
+        android:ellipsize="end"
+        android:scrollHorizontally="true"
+        android:singleLine="true"
+        android:textColor="@android:color/black"
+        android:textSize="@dimen/abc_text_size_medium_material" />
+
+    <TextView
         android:id="@+id/listItemMessage"
-        android:layout_below="@+id/listItemTitle"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
         android:layout_alignStart="@+id/listItemTitle"
-        android:textColor="@android:color/darker_gray"/>
+        android:layout_below="@+id/listItemTitle"
+        android:ellipsize="end"
+        android:scrollHorizontally="true"
+        android:singleLine="true"
+        android:textColor="@android:color/darker_gray" />
 </RelativeLayout>

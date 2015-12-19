@@ -87,8 +87,8 @@ public class MainActivity extends ActionBarActivity {
     private void sendNotification() {
         NotificationCompat.Builder builder = new NotificationCompat.Builder(this)
                 .setSmallIcon(android.R.drawable.ic_menu_more)
-                .setContentTitle("My notification")
-                .setContentText("Hello World!" + notificationId);
+                .setContentTitle("My notification My notification My notification My notification My notification")
+                .setContentText("Hello World! Hello World! Hello World! Hello World! Hello World! Hello World!" + notificationId);
         NotificationManager m = (NotificationManager) getSystemService(NOTIFICATION_SERVICE);
         m.notify(notificationId, builder.build());
         notificationId++;
