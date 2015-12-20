@@ -13,7 +13,10 @@ import android.widget.BaseAdapter;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.List;
+import java.util.TimeZone;
 
 public class NotificationListAdapter extends BaseAdapter {
 
@@ -21,11 +24,13 @@ public class NotificationListAdapter extends BaseAdapter {
         public ImageView icon;
         public TextView title;
         public TextView text;
+        public TextView posted;
 
         public ViewHolder(View v) {
             icon = (ImageView) v.findViewById(R.id.listItemIcon);
             title = (TextView) v.findViewById(R.id.listItemTitle);
             text = (TextView) v.findViewById(R.id.listItemMessage);
+            posted = (TextView) v.findViewById(R.id.listItemPosted);
         }
     }
 
@@ -72,6 +77,11 @@ public class NotificationListAdapter extends BaseAdapter {
         holder.icon.setImageDrawable(appIcon);
         holder.title.setText(SbnUtil.getExtraTitle(sbn));
         holder.text.setText(SbnUtil.getExtraText(sbn));
+
+        Date d = new Date(sbn.getPostTime());
+        SimpleDateFormat sdf = new SimpleDateFormat("HH:mm");
+        sdf.setTimeZone(TimeZone.getDefault());
+        holder.posted.setText(sdf.format(d));
         return convertView;
     }
 }
