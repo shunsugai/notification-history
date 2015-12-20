@@ -7,15 +7,15 @@ import android.content.IntentFilter;
 import android.os.Bundle;
 import android.service.notification.StatusBarNotification;
 import android.support.v7.app.ActionBarActivity;
-import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.BaseAdapter;
-import android.widget.ListView;
 
 import java.util.List;
+
+import de.timroes.android.listview.EnhancedListView;
 
 public class MainActivity extends ActionBarActivity {
 
@@ -28,22 +28,23 @@ public class MainActivity extends ActionBarActivity {
         public void onReceive(Context context, Intent intent) {
             String action = intent.getAction();
             if (ACTION_UPDATE.equals(action)) {
-                mAadpter.notifyDataSetChanged();
+                adapter.notifyDataSetChanged();
             }
         }
     };
 
-    private BaseAdapter mAadpter;
+    private BaseAdapter adapter;
+    private List<StatusBarNotification> notifications;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        ListView listView = (ListView) findViewById(R.id.listView);
-        final List<StatusBarNotification> notifications = NotificationRecorderService.getNotifications();
-        mAadpter = new NotificationListAdapter(getApplicationContext(), notifications);
-        listView.setAdapter(mAadpter);
+        EnhancedListView listView = (EnhancedListView) findViewById(R.id.listView);
+        notifications = NotificationRecorderService.getNotifications();
+        adapter = new NotificationListAdapter(getApplicationContext(), notifications);
+        listView.setAdapter(adapter);
         listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
@@ -51,6 +52,14 @@ public class MainActivity extends ActionBarActivity {
                 SbnUtil.sendNotificationIntent(MainActivity.this, sbn);
             }
         });
+        listView.setDismissCallback(new EnhancedListView.OnDismissCallback() {
+            @Override
+            public EnhancedListView.Undoable onDismiss(EnhancedListView enhancedListView, final int position) {
+                notifications.remove(position);
+                return null;
+            }
+        });
+        listView.enableSwipeToDismiss();
     }
 
     @Override
@@ -59,7 +68,7 @@ public class MainActivity extends ActionBarActivity {
         IntentFilter filter = new IntentFilter(ACTION_UPDATE);
         registerReceiver(mReceiver, filter);
 
-        mAadpter.notifyDataSetChanged();
+        adapter.notifyDataSetChanged();
     }
 
     @Override
