@@ -1,10 +1,8 @@
 package com.sugaishun.notification;
 
-import android.annotation.TargetApi;
 import android.content.Context;
 import android.content.pm.PackageManager;
 import android.graphics.drawable.Drawable;
-import android.os.Build;
 import android.service.notification.StatusBarNotification;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -57,7 +55,6 @@ public class NotificationListAdapter extends BaseAdapter {
         return position;
     }
 
-    @TargetApi(Build.VERSION_CODES.JELLY_BEAN_MR2)
     @Override
     public View getView(int position, View convertView, ViewGroup parent) {
         final ViewHolder holder;
