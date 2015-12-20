@@ -1,17 +1,14 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
+    android:layout_height="@dimen/row_height"
     android:orientation="vertical"
-    android:paddingBottom="11dp"
-    android:paddingLeft="16dp"
-    android:paddingRight="16dp"
-    android:paddingTop="11dp">
+    android:padding="@dimen/row_base_padding">
 
     <ImageView
         android:id="@+id/listItemIcon"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_width="@dimen/row_icon_size"
+        android:layout_height="@dimen/row_icon_size"
         android:contentDescription="@string/row_icon_desc" />
 
     <LinearLayout
@@ -19,7 +16,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_alignParentTop="true"
-        android:layout_marginStart="10dp"
+        android:layout_marginStart="@dimen/row_base_margin"
         android:layout_toEndOf="@+id/listItemIcon"
         android:orientation="horizontal">
 
