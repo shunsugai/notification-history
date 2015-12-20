@@ -1,5 +1,6 @@
 package com.sugaishun.notification;
 
+import android.content.ActivityNotFoundException;
 import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
@@ -9,6 +10,7 @@ import android.os.Bundle;
 import android.service.notification.StatusBarNotification;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -72,10 +74,18 @@ public class MainActivity extends AppCompatActivity {
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
-        int id = item.getItemId();
-        if (id == R.id.action_settings) {
-            NotificationUtil.sendNotification(this);
-            return true;
+        switch (item.getItemId()) {
+            case R.id.action_settings:
+                NotificationUtil.sendNotification(this);
+                return true;
+            case R.id.action_debug_move_to_settings:
+                Intent intent = NotificationUtil.createNotificationListenerSettingsIntent();
+                try {
+                    startActivity(intent);
+                } catch (ActivityNotFoundException e) {
+                    Log.e(TAG, "Matched activity not exist.");
+                }
+                return true;
         }
         return super.onOptionsItemSelected(item);
     }

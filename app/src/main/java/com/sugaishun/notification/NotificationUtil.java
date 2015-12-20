@@ -4,9 +4,15 @@ import android.app.NotificationManager;
 import android.app.PendingIntent;
 import android.content.Context;
 import android.content.Intent;
+import android.os.Build;
+import android.provider.Settings;
 import android.support.v4.app.NotificationCompat;
 
+import java.lang.reflect.Field;
+
 public class NotificationUtil {
+
+    private static final String TAG = NotificationUtil.class.getSimpleName();
 
     private NotificationUtil() {
     }
@@ -31,5 +37,25 @@ public class NotificationUtil {
                 (NotificationManager) context.getSystemService(Context.NOTIFICATION_SERVICE);
         m.notify(notificationId, builder.build());
         notificationId++;
+    }
+
+    public static Intent createNotificationListenerSettingsIntent() {
+        String action;
+        final Intent intent = new Intent();
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP_MR1) {
+            action = Settings.ACTION_NOTIFICATION_LISTENER_SETTINGS;
+        } else {
+            Settings settings = new Settings();
+            try {
+                Field field = settings.getClass().getDeclaredField("ACTION_NOTIFICATION_LISTENER_SETTINGS");
+                action = (String) field.get(settings);
+            } catch (NoSuchFieldException
+                    | IllegalAccessException
+                    | ClassCastException e) {
+                action = "android.settings.NOTIFICATION_LISTENER_SETTINGS";
+            }
+        }
+        intent.setAction(action);
+        return intent;
     }
 }
