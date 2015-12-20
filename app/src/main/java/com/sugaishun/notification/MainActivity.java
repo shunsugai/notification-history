@@ -4,9 +4,11 @@ import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
+import android.graphics.Color;
 import android.os.Bundle;
 import android.service.notification.StatusBarNotification;
-import android.support.v7.app.ActionBarActivity;
+import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -17,7 +19,7 @@ import java.util.List;
 
 import de.timroes.android.listview.EnhancedListView;
 
-public class MainActivity extends ActionBarActivity {
+public class MainActivity extends AppCompatActivity {
 
     private static final String TAG = MainActivity.class.getSimpleName();
 
@@ -41,6 +43,7 @@ public class MainActivity extends ActionBarActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
+        initToolbar();
         EnhancedListView listView = (EnhancedListView) findViewById(R.id.listView);
         notifications = NotificationRecorderService.getNotifications();
         adapter = new NotificationListAdapter(getApplicationContext(), notifications);
@@ -95,5 +98,12 @@ public class MainActivity extends ActionBarActivity {
 
     public static Intent createIntent() {
         return new Intent(MainActivity.ACTION_UPDATE);
+    }
+
+    private void initToolbar() {
+        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
+        toolbar.setTitleTextColor(Color.WHITE);
+        toolbar.setTitle(R.string.action_bar_title);
+        setSupportActionBar(toolbar);
     }
 }
