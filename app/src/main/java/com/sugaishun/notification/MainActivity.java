@@ -44,25 +44,9 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
 
         initToolbar();
-        EnhancedListView listView = (EnhancedListView) findViewById(R.id.listView);
         notifications = NotificationRecorderService.getNotifications();
         adapter = new NotificationListAdapter(getApplicationContext(), notifications);
-        listView.setAdapter(adapter);
-        listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-            @Override
-            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                StatusBarNotification sbn = notifications.get(position);
-                SbnUtil.sendNotificationIntent(MainActivity.this, sbn);
-            }
-        });
-        listView.setDismissCallback(new EnhancedListView.OnDismissCallback() {
-            @Override
-            public EnhancedListView.Undoable onDismiss(EnhancedListView enhancedListView, final int position) {
-                notifications.remove(position);
-                return null;
-            }
-        });
-        listView.enableSwipeToDismiss();
+        initListView();
     }
 
     @Override
@@ -105,5 +89,25 @@ public class MainActivity extends AppCompatActivity {
         toolbar.setTitleTextColor(Color.WHITE);
         toolbar.setTitle(R.string.action_bar_title);
         setSupportActionBar(toolbar);
+    }
+
+    private void initListView() {
+        EnhancedListView listView = (EnhancedListView) findViewById(R.id.listView);
+        listView.setAdapter(adapter);
+        listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                StatusBarNotification sbn = notifications.get(position);
+                SbnUtil.sendNotificationIntent(MainActivity.this, sbn);
+            }
+        });
+        listView.setDismissCallback(new EnhancedListView.OnDismissCallback() {
+            @Override
+            public EnhancedListView.Undoable onDismiss(EnhancedListView enhancedListView, final int position) {
+                notifications.remove(position);
+                return null;
+            }
+        });
+        listView.enableSwipeToDismiss();
     }
 }
