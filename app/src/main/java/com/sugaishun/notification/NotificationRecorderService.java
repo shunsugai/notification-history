@@ -25,7 +25,18 @@ public class NotificationRecorderService extends NotificationListenerService {
     @Override
     public void onNotificationPosted(StatusBarNotification sbn) {
         Log.d(TAG, "onNotificationPosted() called");
-        sNotifications.add(0, sbn);
-        sendBroadcast(MainActivity.createIntent());
+        Log.d(TAG, "sbn: " + sbn.toString());
+        if (isValid(sbn)) {
+            sNotifications.add(0, sbn);
+            sendBroadcast(MainActivity.createIntent());
+        }
+    }
+
+    private boolean isValid(StatusBarNotification sbn) {
+        boolean result = true;
+        if (sbn.isOngoing()) {
+            result = false;
+        }
+        return result;
     }
 }
