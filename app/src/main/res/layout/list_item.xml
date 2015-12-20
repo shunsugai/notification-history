@@ -29,7 +29,7 @@
             android:scrollHorizontally="true"
             android:singleLine="true"
             android:textColor="@android:color/black"
-            android:textSize="@dimen/abc_text_size_medium_material" />
+            android:textSize="@dimen/text_size_row_title" />
 
         <TextView
             android:id="@+id/listItemPosted"
@@ -38,7 +38,7 @@
             android:layout_weight="4"
             android:gravity="right"
             android:textColor="@android:color/darker_gray"
-            android:textSize="12sp" />
+            android:textSize="@dimen/text_size_row_post_time" />
     </LinearLayout>
 
     <TextView

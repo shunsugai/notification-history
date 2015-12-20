@@ -6,4 +6,6 @@
     <dimen name="row_base_padding">16dp</dimen>
     <dimen name="row_base_margin">16dp</dimen>
     <dimen name="row_icon_size">40dp</dimen>
+    <dimen name="text_size_row_title">16sp</dimen>
+    <dimen name="text_size_row_post_time">12sp</dimen>
 </resources>
