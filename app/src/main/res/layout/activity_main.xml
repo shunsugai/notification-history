@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="com.sugaishun.notification.MainActivity">
+    android:background="@color/background"
+    android:orientation="vertical">
 
     <android.support.v7.widget.Toolbar
         android:id="@+id/toolbar"
@@ -12,9 +12,10 @@
         android:background="?attr/colorPrimary"
         android:elevation="2dp" />
 
-    <de.timroes.android.listview.EnhancedListView
-        android:id="@+id/listView"
-        android:layout_width="wrap_content"
+    <android.support.v7.widget.RecyclerView
+        android:id="@+id/main_recycler_view"
+        android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_below="@id/toolbar" />
-</RelativeLayout>
+        android:padding="4dp"
+        android:scrollbars="vertical" />
+</LinearLayout>

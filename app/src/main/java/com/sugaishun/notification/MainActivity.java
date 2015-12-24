@@ -9,17 +9,15 @@ import android.graphics.Color;
 import android.os.Bundle;
 import android.service.notification.StatusBarNotification;
 import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
+import android.support.v7.widget.helper.ItemTouchHelper;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
-import android.view.View;
-import android.widget.AdapterView;
-import android.widget.BaseAdapter;
 
 import java.util.List;
-
-import de.timroes.android.listview.EnhancedListView;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -32,23 +30,54 @@ public class MainActivity extends AppCompatActivity {
         public void onReceive(Context context, Intent intent) {
             String action = intent.getAction();
             if (ACTION_UPDATE.equals(action)) {
-                adapter.notifyDataSetChanged();
+                mAdapter.notifyDataSetChanged();
             }
         }
     };
 
-    private BaseAdapter adapter;
     private List<StatusBarNotification> notifications;
+
+    private RecyclerView mRecyclerView;
+    private RecyclerView.Adapter mAdapter;
+    private RecyclerView.LayoutManager mLayoutManager;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        initToolbar();
         notifications = NotificationRecorderService.getNotifications();
-        adapter = new NotificationListAdapter(getApplicationContext(), notifications);
-        initListView();
+
+        mRecyclerView = (RecyclerView) findViewById(R.id.main_recycler_view);
+        mRecyclerView.setHasFixedSize(false);
+        mLayoutManager = new LinearLayoutManager(this);
+        mRecyclerView.setLayoutManager(mLayoutManager);
+        mAdapter = new NotificationAdapter(this, notifications);
+        mRecyclerView.setAdapter(mAdapter);
+
+        ItemTouchHelper itemDecor = new ItemTouchHelper(
+                new ItemTouchHelper.SimpleCallback(ItemTouchHelper.UP | ItemTouchHelper.DOWN,
+                        ItemTouchHelper.RIGHT) {
+
+                    @Override
+                    public boolean onMove(RecyclerView recyclerView,
+                                          RecyclerView.ViewHolder viewHolder,
+                                          RecyclerView.ViewHolder target) {
+                        final int fromPos = viewHolder.getAdapterPosition();
+                        final int toPos = target.getAdapterPosition();
+                        mAdapter.notifyItemMoved(fromPos, toPos);
+                        return false;
+                    }
+
+                    @Override
+                    public void onSwiped(RecyclerView.ViewHolder viewHolder, int direction) {
+                        final int fromPos = viewHolder.getAdapterPosition();
+                        notifications.remove(fromPos);
+                        mAdapter.notifyItemRemoved(fromPos);
+                    }
+                });
+        itemDecor.attachToRecyclerView(mRecyclerView);
+        initToolbar();
     }
 
     @Override
@@ -56,8 +85,7 @@ public class MainActivity extends AppCompatActivity {
         super.onResume();
         IntentFilter filter = new IntentFilter(ACTION_UPDATE);
         registerReceiver(mReceiver, filter);
-
-        adapter.notifyDataSetChanged();
+        mAdapter.notifyDataSetChanged();
     }
 
     @Override
@@ -99,25 +127,5 @@ public class MainActivity extends AppCompatActivity {
         toolbar.setTitleTextColor(Color.WHITE);
         toolbar.setTitle(R.string.action_bar_title);
         setSupportActionBar(toolbar);
-    }
-
-    private void initListView() {
-        EnhancedListView listView = (EnhancedListView) findViewById(R.id.listView);
-        listView.setAdapter(adapter);
-        listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-            @Override
-            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                StatusBarNotification sbn = notifications.get(position);
-                SbnUtil.sendNotificationIntent(MainActivity.this, sbn);
-            }
-        });
-        listView.setDismissCallback(new EnhancedListView.OnDismissCallback() {
-            @Override
-            public EnhancedListView.Undoable onDismiss(EnhancedListView enhancedListView, final int position) {
-                notifications.remove(position);
-                return null;
-            }
-        });
-        listView.enableSwipeToDismiss();
     }
 }

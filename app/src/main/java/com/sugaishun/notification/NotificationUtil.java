@@ -31,8 +31,8 @@ public class NotificationUtil {
         NotificationCompat.Builder builder = new NotificationCompat.Builder(context)
                 .setContentIntent(resultPendingIntent)
                 .setSmallIcon(android.R.drawable.ic_menu_more)
-                .setContentTitle("My notification My notification My notification My notification My notification")
-                .setContentText("Hello World! Hello World! Hello World! Hello World! Hello World! Hello World!" + notificationId);
+                .setContentTitle("My notification")
+                .setContentText(notificationId + " Hello World! Hello World! Hello World! Hello World! Hello World! Hello World!" + notificationId);
         NotificationManager m =
                 (NotificationManager) context.getSystemService(Context.NOTIFICATION_SERVICE);
         m.notify(notificationId, builder.build());
