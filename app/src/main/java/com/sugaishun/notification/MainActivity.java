@@ -8,7 +8,9 @@ import android.content.IntentFilter;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.service.notification.StatusBarNotification;
+import android.support.design.widget.CoordinatorLayout;
 import android.support.design.widget.FloatingActionButton;
+import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -19,6 +21,7 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class MainActivity extends AppCompatActivity {
@@ -80,11 +83,25 @@ public class MainActivity extends AppCompatActivity {
                 });
         itemDecor.attachToRecyclerView(mRecyclerView);
 
-        FloatingActionButton btn = (FloatingActionButton) findViewById(R.id.action_button);
-        btn.setOnClickListener(new View.OnClickListener() {
+        final CoordinatorLayout coordinatorLayout = (CoordinatorLayout) findViewById(R.id.coordinator_layout);
+        FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.action_button);
+        fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                if (notifications.size() == 0) {
+                    return;
+                }
+                final List<StatusBarNotification> items = new ArrayList<>(notifications);
                 mAdapter.clearData();
+                Snackbar.make(coordinatorLayout, "Deleted", Snackbar.LENGTH_LONG)
+                        .setAction("UNDO", new View.OnClickListener(){
+                            @Override
+                            public void onClick(View v) {
+                                notifications.addAll(items);
+                                mAdapter.notifyDataSetChanged();
+                            }
+                        })
+                        .show();
             }
         });
         initToolbar();
