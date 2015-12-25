@@ -1,5 +1,6 @@
 package com.sugaishun.notification;
 
+import android.app.Notification;
 import android.content.Context;
 import android.service.notification.StatusBarNotification;
 import android.support.v7.widget.RecyclerView;
@@ -42,8 +43,14 @@ public class NotificationAdapter extends RecyclerView.Adapter<NotificationAdapte
     public void onBindViewHolder(ViewHolder holder, final int position) {
         ViewGroup parent = (ViewGroup) holder.frameLayout.getParent();
         holder.frameLayout.removeAllViews();
-        holder.frameLayout.addView(
-                items.get(position).getNotification().contentView.apply(context, parent));
+        Notification notif = items.get(position).getNotification();
+        View notifView;
+        if (notif.bigContentView == null) {
+            notifView = notif.contentView.apply(context, parent);
+        } else {
+            notifView = notif.bigContentView.apply(context, parent);
+        }
+        holder.frameLayout.addView(notifView);
         holder.frameLayout.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
