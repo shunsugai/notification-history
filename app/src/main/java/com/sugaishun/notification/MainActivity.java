@@ -32,7 +32,7 @@ public class MainActivity extends AppCompatActivity {
         public void onReceive(Context context, Intent intent) {
             String action = intent.getAction();
             if (ACTION_UPDATE.equals(action)) {
-                mAdapter.notifyDataSetChanged();
+                mAdapter.notifyItemInserted(0);
             }
         }
     };
