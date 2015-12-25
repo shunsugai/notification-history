@@ -8,6 +8,7 @@ import android.content.IntentFilter;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.service.notification.StatusBarNotification;
+import android.support.design.widget.FloatingActionButton;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -16,6 +17,7 @@ import android.support.v7.widget.helper.ItemTouchHelper;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
 
 import java.util.List;
 
@@ -38,7 +40,7 @@ public class MainActivity extends AppCompatActivity {
     private List<StatusBarNotification> notifications;
 
     private RecyclerView mRecyclerView;
-    private RecyclerView.Adapter mAdapter;
+    private NotificationAdapter mAdapter;
     private RecyclerView.LayoutManager mLayoutManager;
 
     @Override
@@ -77,6 +79,14 @@ public class MainActivity extends AppCompatActivity {
                     }
                 });
         itemDecor.attachToRecyclerView(mRecyclerView);
+
+        FloatingActionButton btn = (FloatingActionButton) findViewById(R.id.action_button);
+        btn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                mAdapter.clearData();
+            }
+        });
         initToolbar();
     }
 

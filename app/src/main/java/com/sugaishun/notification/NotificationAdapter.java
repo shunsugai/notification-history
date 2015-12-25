@@ -56,4 +56,14 @@ public class NotificationAdapter extends RecyclerView.Adapter<NotificationAdapte
     public int getItemCount() {
         return items.size();
     }
+
+    public void clearData() {
+        int size = items.size();
+        if (size > 0) {
+            for (int i = 0; i < size; i++) {
+                items.remove(0);
+            }
+            notifyItemRangeRemoved(0, size);
+        }
+    }
 }
