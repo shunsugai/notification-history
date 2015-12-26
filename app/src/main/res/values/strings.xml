@@ -4,4 +4,6 @@
     <string name="action_debug_move_to_settings">debug</string>
     <string name="row_icon_desc">Application icon</string>
     <string name="action_bar_title">Notification History</string>
+    <string name="msg_no_action_associated">No action associated</string>
+    <string name="action_debug_send_notification_with_no_action">notif 2</string>
 </resources>
