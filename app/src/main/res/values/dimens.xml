@@ -7,4 +7,5 @@
     <dimen name="recycler_view_padding_top">0dp</dimen>
     <dimen name="recycler_view_margin_top">56dp</dimen>
     <dimen name="floating_action_button_margin">16dp</dimen>
+    <dimen name="no_notifications_font_size">18sp</dimen>
 </resources>

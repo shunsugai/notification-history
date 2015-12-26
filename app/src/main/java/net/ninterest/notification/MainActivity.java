@@ -20,6 +20,7 @@ import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.view.animation.AlphaAnimation;
 
 import com.crashlytics.android.Crashlytics;
 import com.google.android.gms.ads.AdRequest;
@@ -56,6 +57,10 @@ public class MainActivity extends AppCompatActivity {
 
     private AdView mAdView;
 
+    private RecyclerView.AdapterDataObserver mEmptyObserver;
+
+    private View mEmptyView;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -67,11 +72,13 @@ public class MainActivity extends AppCompatActivity {
         mAdView.loadAd(adRequest);
 
         mCoordinatorLayout = (CoordinatorLayout) findViewById(R.id.coordinator_layout);
+        mEmptyView = this.findViewById(R.id.textview_no_notifications);
 
         NotificationItemManager m = NotificationItemManager.getInstance();
         mNotifications = m.getNotificatonItems();
         mAdapter = new NotificationAdapter(this, mNotifications);
 
+        registerObserver();
         initToolbar();
         initRecyclerView();
         initFloatingActionButton();
@@ -117,6 +124,9 @@ public class MainActivity extends AppCompatActivity {
     protected void onDestroy() {
         if (mAdView != null) {
             mAdView.destroy();
+        }
+        if (mAdapter != null) {
+            mAdapter.unregisterAdapterDataObserver(mEmptyObserver);
         }
         super.onDestroy();
     }
@@ -226,5 +236,39 @@ public class MainActivity extends AppCompatActivity {
                         .show();
             }
         });
+    }
+
+    private void registerObserver() {
+        mEmptyObserver = new RecyclerView.AdapterDataObserver() {
+            @Override
+            public void onChanged() {
+                super.onChanged();
+                checkIfEmpty();
+            }
+
+            @Override
+            public void onItemRangeInserted(int positionStart, int itemCount) {
+                super.onItemRangeInserted(positionStart, itemCount);
+                checkIfEmpty();
+            }
+
+            @Override
+            public void onItemRangeRemoved(int positionStart, int itemCount) {
+                super.onItemRangeRemoved(positionStart, itemCount);
+                checkIfEmpty();
+            }
+        };
+        mAdapter.registerAdapterDataObserver(mEmptyObserver);
+    }
+
+    private void checkIfEmpty() {
+        if (mAdapter.getItemCount() == 0) {
+            AlphaAnimation anim = new AlphaAnimation(0, 1);
+            anim.setDuration(200);
+            mEmptyView.startAnimation(anim);
+            mEmptyView.setVisibility(View.VISIBLE);
+        } else {
+            mEmptyView.setVisibility(View.GONE);
+        }
     }
 }
