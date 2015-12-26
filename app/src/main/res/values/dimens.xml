@@ -2,10 +2,7 @@
     <!-- Default screen margins, per the Android Design guidelines. -->
     <dimen name="activity_horizontal_margin">16dp</dimen>
     <dimen name="activity_vertical_margin">16dp</dimen>
-    <dimen name="row_height">72dp</dimen>
-    <dimen name="row_base_padding">16dp</dimen>
-    <dimen name="row_base_margin">16dp</dimen>
-    <dimen name="row_icon_size">40dp</dimen>
-    <dimen name="text_size_row_title">16sp</dimen>
-    <dimen name="text_size_row_post_time">12sp</dimen>
+    <dimen name="recycler_view_padding_common">4dp</dimen>
+    <dimen name="recycler_view_padding_top">58dp</dimen>
+    <dimen name="floating_action_button_margin">24dp</dimen>
 </resources>
