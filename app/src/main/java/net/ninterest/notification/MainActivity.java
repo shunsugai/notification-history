@@ -22,7 +22,9 @@ import android.view.MenuItem;
 import android.view.View;
 
 import com.crashlytics.android.Crashlytics;
+
 import io.fabric.sdk.android.Fabric;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -42,11 +44,9 @@ public class MainActivity extends AppCompatActivity {
         }
     };
 
-    private List<StatusBarNotification> notifications;
+    private List<StatusBarNotification> mNotifications;
 
-    private RecyclerView mRecyclerView;
     private NotificationAdapter mAdapter;
-    private RecyclerView.LayoutManager mLayoutManager;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -54,60 +54,12 @@ public class MainActivity extends AppCompatActivity {
         Fabric.with(this, new Crashlytics());
         setContentView(R.layout.activity_main);
 
-        notifications = NotificationRecorderService.getNotifications();
+        mNotifications = NotificationRecorderService.getNotifications();
+        mAdapter = new NotificationAdapter(this, mNotifications);
 
-        mRecyclerView = (RecyclerView) findViewById(R.id.main_recycler_view);
-        mRecyclerView.setHasFixedSize(false);
-        mLayoutManager = new LinearLayoutManager(this);
-        mRecyclerView.setLayoutManager(mLayoutManager);
-        mAdapter = new NotificationAdapter(this, notifications);
-        mRecyclerView.setAdapter(mAdapter);
-
-        ItemTouchHelper itemDecor = new ItemTouchHelper(
-                new ItemTouchHelper.SimpleCallback(ItemTouchHelper.UP | ItemTouchHelper.DOWN,
-                        ItemTouchHelper.RIGHT) {
-
-                    @Override
-                    public boolean onMove(RecyclerView recyclerView,
-                                          RecyclerView.ViewHolder viewHolder,
-                                          RecyclerView.ViewHolder target) {
-                        final int fromPos = viewHolder.getAdapterPosition();
-                        final int toPos = target.getAdapterPosition();
-                        mAdapter.notifyItemMoved(fromPos, toPos);
-                        return false;
-                    }
-
-                    @Override
-                    public void onSwiped(RecyclerView.ViewHolder viewHolder, int direction) {
-                        final int fromPos = viewHolder.getAdapterPosition();
-                        notifications.remove(fromPos);
-                        mAdapter.notifyItemRemoved(fromPos);
-                    }
-                });
-        itemDecor.attachToRecyclerView(mRecyclerView);
-
-        final CoordinatorLayout coordinatorLayout = (CoordinatorLayout) findViewById(R.id.coordinator_layout);
-        FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.action_button);
-        fab.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                if (notifications.size() == 0) {
-                    return;
-                }
-                final List<StatusBarNotification> items = new ArrayList<>(notifications);
-                mAdapter.clearData();
-                Snackbar.make(coordinatorLayout, "Deleted", Snackbar.LENGTH_LONG)
-                        .setAction("UNDO", new View.OnClickListener(){
-                            @Override
-                            public void onClick(View v) {
-                                notifications.addAll(items);
-                                mAdapter.notifyDataSetChanged();
-                            }
-                        })
-                        .show();
-            }
-        });
         initToolbar();
+        initRecyclerView();
+        initFloatingActionButton();
     }
 
     @Override
@@ -160,5 +112,60 @@ public class MainActivity extends AppCompatActivity {
         toolbar.setTitleTextColor(Color.WHITE);
         toolbar.setTitle(R.string.action_bar_title);
         setSupportActionBar(toolbar);
+    }
+
+    private void initRecyclerView() {
+        RecyclerView recyclerView = (RecyclerView) findViewById(R.id.main_recycler_view);
+        recyclerView.setHasFixedSize(false);
+        RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(this);
+        recyclerView.setLayoutManager(layoutManager);
+        recyclerView.setAdapter(mAdapter);
+
+        ItemTouchHelper itemDecor = new ItemTouchHelper(
+                new ItemTouchHelper.SimpleCallback(ItemTouchHelper.UP | ItemTouchHelper.DOWN,
+                        ItemTouchHelper.RIGHT) {
+
+                    @Override
+                    public boolean onMove(RecyclerView recyclerView,
+                                          RecyclerView.ViewHolder viewHolder,
+                                          RecyclerView.ViewHolder target) {
+                        final int fromPos = viewHolder.getAdapterPosition();
+                        final int toPos = target.getAdapterPosition();
+                        mAdapter.notifyItemMoved(fromPos, toPos);
+                        return false;
+                    }
+
+                    @Override
+                    public void onSwiped(RecyclerView.ViewHolder viewHolder, int direction) {
+                        final int fromPos = viewHolder.getAdapterPosition();
+                        mNotifications.remove(fromPos);
+                        mAdapter.notifyItemRemoved(fromPos);
+                    }
+                });
+        itemDecor.attachToRecyclerView(recyclerView);
+    }
+
+    private void initFloatingActionButton() {
+        final CoordinatorLayout layout = (CoordinatorLayout) findViewById(R.id.coordinator_layout);
+        FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.action_button);
+        fab.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (mNotifications.size() == 0) {
+                    return;
+                }
+                final List<StatusBarNotification> items = new ArrayList<>(mNotifications);
+                mAdapter.clearData();
+                Snackbar.make(layout, R.string.msg_all_items_deleted, Snackbar.LENGTH_LONG)
+                        .setAction(R.string.action_undo, new View.OnClickListener() {
+                            @Override
+                            public void onClick(View v) {
+                                mNotifications.addAll(items);
+                                mAdapter.notifyDataSetChanged();
+                            }
+                        })
+                        .show();
+            }
+        });
     }
 }
