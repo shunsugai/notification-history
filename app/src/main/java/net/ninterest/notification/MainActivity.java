@@ -144,6 +144,9 @@ public class MainActivity extends AppCompatActivity {
                     Log.e(TAG, "Matched activity not exist.");
                 }
                 return true;
+            case R.id.action_debug_send_notification_with_no_action:
+                NotificationUtil.sendNotificationNoAction(this);
+                return true;
         }
         return super.onOptionsItemSelected(item);
     }

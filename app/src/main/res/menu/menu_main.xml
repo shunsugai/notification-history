@@ -11,5 +11,10 @@
         android:id="@+id/action_debug_move_to_settings"
         android:orderInCategory="200"
         android:title="@string/action_debug_move_to_settings"
-        app:showAsAction="never"/>
+        app:showAsAction="never" />
+    <item
+        android:id="@+id/action_debug_send_notification_with_no_action"
+        android:orderInCategory="200"
+        android:title="@string/action_debug_send_notification_with_no_action"
+        app:showAsAction="never" />
 </menu>
