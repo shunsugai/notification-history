@@ -1,4 +1,4 @@
-package com.sugaishun.notification;
+package net.ninterest.notification;
 
 import android.content.ActivityNotFoundException;
 import android.content.BroadcastReceiver;
@@ -28,7 +28,7 @@ public class MainActivity extends AppCompatActivity {
 
     private static final String TAG = MainActivity.class.getSimpleName();
 
-    private static final String ACTION_UPDATE = "com.sugaishun.notification.ACTION_UPDATE";
+    private static final String ACTION_UPDATE = "net.ninterest.notification.ACTION_UPDATE";
 
     private BroadcastReceiver mReceiver = new BroadcastReceiver() {
         @Override

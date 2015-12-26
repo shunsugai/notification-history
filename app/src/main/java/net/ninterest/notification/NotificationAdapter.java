@@ -1,4 +1,4 @@
-package com.sugaishun.notification;
+package net.ninterest.notification;
 
 import android.app.Notification;
 import android.content.Context;

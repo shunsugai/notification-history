@@ -1,4 +1,4 @@
-package com.sugaishun.notification;
+package net.ninterest.notification;
 
 import android.annotation.SuppressLint;
 import android.content.Context;

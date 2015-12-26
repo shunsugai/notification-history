@@ -1,4 +1,4 @@
-package com.sugaishun.notification;
+package net.ninterest.notification;
 
 import android.app.NotificationManager;
 import android.app.PendingIntent;
