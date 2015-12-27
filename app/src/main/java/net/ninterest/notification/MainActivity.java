@@ -7,7 +7,6 @@ import android.content.Intent;
 import android.content.IntentFilter;
 import android.graphics.Color;
 import android.os.Bundle;
-import android.service.notification.StatusBarNotification;
 import android.support.design.widget.CoordinatorLayout;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
@@ -22,6 +21,8 @@ import android.view.MenuItem;
 import android.view.View;
 
 import com.crashlytics.android.Crashlytics;
+
+import net.ninterest.notification.model.NotificationItem;
 
 import io.fabric.sdk.android.Fabric;
 
@@ -44,7 +45,7 @@ public class MainActivity extends AppCompatActivity {
         }
     };
 
-    private List<StatusBarNotification> mNotifications;
+    private List<NotificationItem> mNotifications;
 
     private NotificationAdapter mAdapter;
 
@@ -154,7 +155,7 @@ public class MainActivity extends AppCompatActivity {
                 if (mNotifications.size() == 0) {
                     return;
                 }
-                final List<StatusBarNotification> items = new ArrayList<>(mNotifications);
+                final List<NotificationItem> items = new ArrayList<>(mNotifications);
                 mAdapter.clearData();
                 Snackbar.make(layout, R.string.msg_all_items_deleted, Snackbar.LENGTH_LONG)
                         .setAction(R.string.action_undo, new View.OnClickListener() {

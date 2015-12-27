@@ -42,7 +42,7 @@ public class NotificationUtil {
     public static void sendNotificationNoAction(Context context) {
         NotificationCompat.Builder builder = new NotificationCompat.Builder(context)
                 .setSmallIcon(android.R.drawable.ic_menu_more)
-                .setContentTitle("This notification has no action")
+                .setContentTitle("T notification has no action")
                 .setContentText(notificationId + " test test test" + notificationId);
         NotificationManager m =
                 (NotificationManager) context.getSystemService(Context.NOTIFICATION_SERVICE);
