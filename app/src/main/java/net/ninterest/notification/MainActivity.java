@@ -122,8 +122,8 @@ public class MainActivity extends AppCompatActivity {
         recyclerView.setAdapter(mAdapter);
 
         ItemTouchHelper itemDecor = new ItemTouchHelper(
-                new ItemTouchHelper.SimpleCallback(ItemTouchHelper.UP | ItemTouchHelper.DOWN,
-                        ItemTouchHelper.RIGHT) {
+                new ItemTouchHelper.SimpleCallback(0,
+                        ItemTouchHelper.RIGHT | ItemTouchHelper.LEFT) {
 
                     @Override
                     public boolean onMove(RecyclerView recyclerView,
