@@ -9,6 +9,8 @@
     <string name="action_debug_send_notification_with_no_action">notif 2</string>
     <!-- Toast message if there is no action in Notification -->
     <string name="msg_no_action_associated">No action associated</string>
+    <!-- SnackBar message when an item is deleted -->
+    <string name="msg_one_item_deleted">1 Deleted</string>
     <!-- SnackBar message when all items are cleared -->
     <string name="msg_all_items_deleted">Deleted</string>
     <!-- SnackBar action when all items are cleared -->

@@ -49,11 +49,15 @@ public class MainActivity extends AppCompatActivity {
 
     private NotificationAdapter mAdapter;
 
+    private CoordinatorLayout mCoordinatorLayout;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         Fabric.with(this, new Crashlytics());
         setContentView(R.layout.activity_main);
+
+        mCoordinatorLayout = (CoordinatorLayout) findViewById(R.id.coordinator_layout);
 
         mNotifications = NotificationRecorderService.getNotifications();
         mAdapter = new NotificationAdapter(this, mNotifications);
@@ -139,15 +143,25 @@ public class MainActivity extends AppCompatActivity {
                     @Override
                     public void onSwiped(RecyclerView.ViewHolder viewHolder, int direction) {
                         final int fromPos = viewHolder.getAdapterPosition();
+                        final NotificationItem backup = mNotifications.get(fromPos);
                         mNotifications.remove(fromPos);
                         mAdapter.notifyItemRemoved(fromPos);
+                        Snackbar.make(mCoordinatorLayout,
+                                R.string.msg_one_item_deleted, Snackbar.LENGTH_LONG)
+                                .setAction(R.string.action_undo, new View.OnClickListener() {
+                                    @Override
+                                    public void onClick(View v) {
+                                        mNotifications.add(fromPos, backup);
+                                        mAdapter.notifyItemInserted(fromPos);
+                                    }
+                                })
+                                .show();
                     }
                 });
         itemDecor.attachToRecyclerView(recyclerView);
     }
 
     private void initFloatingActionButton() {
-        final CoordinatorLayout layout = (CoordinatorLayout) findViewById(R.id.coordinator_layout);
         FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.action_button);
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -157,7 +171,7 @@ public class MainActivity extends AppCompatActivity {
                 }
                 final List<NotificationItem> items = new ArrayList<>(mNotifications);
                 mAdapter.clearData();
-                Snackbar.make(layout, R.string.msg_all_items_deleted, Snackbar.LENGTH_LONG)
+                Snackbar.make(mCoordinatorLayout, R.string.msg_all_items_deleted, Snackbar.LENGTH_LONG)
                         .setAction(R.string.action_undo, new View.OnClickListener() {
                             @Override
                             public void onClick(View v) {
