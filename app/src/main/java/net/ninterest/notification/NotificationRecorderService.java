@@ -7,6 +7,8 @@ import android.service.notification.NotificationListenerService;
 import android.service.notification.StatusBarNotification;
 import android.util.Log;
 
+import net.ninterest.notification.model.NotificationItem;
+
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Objects;
@@ -17,9 +19,9 @@ public class NotificationRecorderService extends NotificationListenerService {
 
     private static final String ENABLED_NOTIFICATION_LISTENERS = "enabled_notification_listeners";
 
-    private static List<StatusBarNotification> sNotifications = new LinkedList<>();
+    private static List<NotificationItem> sNotifications = new LinkedList<>();
 
-    public static List<StatusBarNotification> getNotifications() {
+    public static List<NotificationItem> getNotifications() {
         return sNotifications;
     }
 
@@ -40,17 +42,10 @@ public class NotificationRecorderService extends NotificationListenerService {
     public void onNotificationPosted(StatusBarNotification sbn) {
         Log.d(TAG, "onNotificationPosted() called");
         Log.d(TAG, "sbn: " + sbn.toString());
-        if (isValid(sbn)) {
-            sNotifications.add(0, sbn);
+        NotificationItem notification = new NotificationItem(sbn);
+        if (notification.isValid()) {
+            sNotifications.add(0, notification);
             sendBroadcast(MainActivity.createIntent());
         }
-    }
-
-    private boolean isValid(StatusBarNotification sbn) {
-        boolean result = true;
-        if (sbn.isOngoing()) {
-            result = false;
-        }
-        return result;
     }
 }
