@@ -59,7 +59,8 @@ public class MainActivity extends AppCompatActivity {
 
         mCoordinatorLayout = (CoordinatorLayout) findViewById(R.id.coordinator_layout);
 
-        mNotifications = NotificationRecorderService.getNotifications();
+        NotificationItemManager m = NotificationItemManager.getInstance();
+        mNotifications = m.getNotificatonItems();
         mAdapter = new NotificationAdapter(this, mNotifications);
 
         initToolbar();
