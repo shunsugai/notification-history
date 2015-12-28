@@ -17,10 +17,16 @@ public class NotificationItem {
 
     private StatusBarNotification mSbn;
     private Notification mNotif;
+    private String mTitle;
+    private String mText;
+    private String mPackageName;
 
     public NotificationItem(StatusBarNotification sbn) {
         mSbn = sbn;
         mNotif = sbn.getNotification();
+        mTitle = (String) mNotif.extras.getCharSequence(Notification.EXTRA_TITLE);
+        mText = (String) mNotif.extras.getCharSequence(Notification.EXTRA_TEXT);
+        mPackageName = mSbn.getPackageName();
     }
 
     /**
@@ -73,5 +79,26 @@ public class NotificationItem {
             notifView = mNotif.bigContentView.apply(context, parent);
         }
         return notifView;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+
+        NotificationItem that = (NotificationItem) o;
+
+        if (!mTitle.equals(that.mTitle)) return false;
+        if (!mText.equals(that.mText)) return false;
+        return mPackageName.equals(that.mPackageName);
+
+    }
+
+    @Override
+    public int hashCode() {
+        int result = mTitle.hashCode();
+        result = 31 * result + mText.hashCode();
+        result = 31 * result + mPackageName.hashCode();
+        return result;
     }
 }

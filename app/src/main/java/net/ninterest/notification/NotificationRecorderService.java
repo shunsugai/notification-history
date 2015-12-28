@@ -9,8 +9,6 @@ import android.util.Log;
 
 import net.ninterest.notification.model.NotificationItem;
 
-import java.util.LinkedList;
-import java.util.List;
 import java.util.Objects;
 
 @SuppressLint("OverrideAbstract")
@@ -19,10 +17,12 @@ public class NotificationRecorderService extends NotificationListenerService {
 
     private static final String ENABLED_NOTIFICATION_LISTENERS = "enabled_notification_listeners";
 
-    private static List<NotificationItem> sNotifications = new LinkedList<>();
+    private NotificationItemManager mItemManager;
 
-    public static List<NotificationItem> getNotifications() {
-        return sNotifications;
+    @Override
+    public void onCreate() {
+        super.onCreate();
+        mItemManager = NotificationItemManager.getInstance();
     }
 
     /**
@@ -43,8 +43,7 @@ public class NotificationRecorderService extends NotificationListenerService {
         Log.d(TAG, "onNotificationPosted() called");
         Log.d(TAG, "sbn: " + sbn.toString());
         NotificationItem notification = new NotificationItem(sbn);
-        if (notification.isValid()) {
-            sNotifications.add(0, notification);
+        if (mItemManager.addFirst(notification)) {
             sendBroadcast(MainActivity.createIntent());
         }
     }
