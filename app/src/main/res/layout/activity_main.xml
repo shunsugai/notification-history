@@ -21,6 +21,7 @@
         android:paddingLeft="@dimen/recycler_view_padding_common"
         android:paddingRight="@dimen/recycler_view_padding_common"
         android:paddingTop="@dimen/recycler_view_padding_top"
+        android:layout_marginTop="@dimen/recycler_view_margin_top"
         android:scrollbars="vertical" />
 
     <android.support.design.widget.FloatingActionButton
