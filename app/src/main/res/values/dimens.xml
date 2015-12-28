@@ -3,6 +3,7 @@
     <dimen name="activity_horizontal_margin">16dp</dimen>
     <dimen name="activity_vertical_margin">16dp</dimen>
     <dimen name="recycler_view_padding_common">4dp</dimen>
+    <dimen name="recycler_view_padding_bottom">0dp</dimen>
     <dimen name="recycler_view_padding_top">58dp</dimen>
     <dimen name="floating_action_button_margin">24dp</dimen>
 </resources>
