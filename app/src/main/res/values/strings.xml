@@ -3,10 +3,15 @@
     <string name="action_bar_title">Notification History</string>
     <!-- Menu: open application settings -->
     <string name="action_settings">Settings</string>
-    <!-- Menu: open Android Settings -->
-    <string name="action_debug_move_to_settings">debug</string>
+
+    <!-- DEBUG menu strings -->
+    <!-- Menu: issue notification -->
+    <string name="action_debug_issue_notification">notify</string>
     <!-- Menu: Send notification for debugging -->
-    <string name="action_debug_send_notification_with_no_action">notif 2</string>
+    <string name="action_debug_send_notification_with_no_action">notify 2</string>
+    <!-- Menu: open Android Settings -->
+    <string name="action_debug_move_to_settings">notification access</string>
+
     <!-- Toast message if there is no action in Notification -->
     <string name="msg_no_action_associated">No action associated</string>
     <!-- SnackBar message when an item is deleted -->
