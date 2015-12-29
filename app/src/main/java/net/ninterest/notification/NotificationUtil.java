@@ -78,7 +78,7 @@ public class NotificationUtil {
      * @param context
      * @return
      */
-    public static StatusBarNotification createFirstSettingsNotification(Context context) {
+    public static StatusBarNotification createWelcomeNotification(Context context) {
         PendingIntent resultPendingIntent =
                 PendingIntent.getActivity(
                         context,
@@ -88,13 +88,18 @@ public class NotificationUtil {
                 );
         Notification notification = new NotificationCompat.Builder(context)
                 .setSmallIcon(R.mipmap.ic_launcher)
-                .setContentTitle("Welcome")
-                .setContentText("test test test")
+                .setContentTitle(context.getString(R.string.title_settings_notification_access))
+                .setContentText(context.getString(R.string.msg_settings_notification_access))
                 .setContentIntent(resultPendingIntent)
+                .setStyle(new NotificationCompat.BigTextStyle().bigText(
+                        context.getString(R.string.msg_settings_notification_access)))
+                .addAction(R.drawable.ic_settings_black_36dp,
+                        context.getString(R.string.actions_click_to_enable),
+                        resultPendingIntent)
                 .build();
         String packageName = context.getPackageName();
         int id = 1;
-        String tag = "tag";
+        String tag = packageName;
         UserHandle userHandle = android.os.Process.myUserHandle();
         int uid = android.os.Process.myUid();
         int pid = android.os.Process.myPid();

@@ -15,4 +15,8 @@
     <string name="msg_all_items_deleted">Deleted</string>
     <!-- SnackBar action when all items are cleared -->
     <string name="action_undo">UNDO</string>
+    <string name="title_settings_notification_access">Welcome to Notification History</string>
+    <string name="msg_settings_notification_access">Thank you for downloading Notification History.\n
+        To record notifications, enable "Notification History" in "Notification access" settings.</string>
+    <string name="actions_click_to_enable">click to enable</string>
 </resources>

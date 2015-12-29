@@ -75,11 +75,17 @@ public class MainActivity extends AppCompatActivity {
         IntentFilter filter = new IntentFilter(ACTION_UPDATE);
         registerReceiver(mReceiver, filter);
 
-        if (!NotificationRecorderService.isEnabled(this)) {
-            StatusBarNotification sbn = NotificationUtil.createFirstSettingsNotification(this);
-            NotificationItem n = new NotificationItem(sbn);
+        StatusBarNotification sbn = NotificationUtil.createWelcomeNotification(this);
+        NotificationItem notificationItem = new NotificationItem(sbn);
+
+        if (NotificationRecorderService.isEnabled(this)) {
+            int position = mNotifications.indexOf(notificationItem);
+            if (position >= 0) {
+                mNotifications.remove(position);
+            }
+        } else {
             NotificationItemManager manager = NotificationItemManager.getInstance();
-            manager.addFirst(n);
+            manager.addFirst(notificationItem);
         }
 
         mAdapter.notifyDataSetChanged();
