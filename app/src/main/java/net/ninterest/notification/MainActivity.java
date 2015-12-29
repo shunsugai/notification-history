@@ -7,6 +7,7 @@ import android.content.Intent;
 import android.content.IntentFilter;
 import android.graphics.Color;
 import android.os.Bundle;
+import android.service.notification.StatusBarNotification;
 import android.support.design.widget.CoordinatorLayout;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
@@ -73,6 +74,14 @@ public class MainActivity extends AppCompatActivity {
         super.onResume();
         IntentFilter filter = new IntentFilter(ACTION_UPDATE);
         registerReceiver(mReceiver, filter);
+
+        if (!NotificationRecorderService.isEnabled(this)) {
+            StatusBarNotification sbn = NotificationUtil.createFirstSettingsNotification(this);
+            NotificationItem n = new NotificationItem(sbn);
+            NotificationItemManager manager = NotificationItemManager.getInstance();
+            manager.addFirst(n);
+        }
+
         mAdapter.notifyDataSetChanged();
     }
 
