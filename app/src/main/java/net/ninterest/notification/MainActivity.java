@@ -99,27 +99,31 @@ public class MainActivity extends AppCompatActivity {
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
-        getMenuInflater().inflate(R.menu.menu_main, menu);
+        if (BuildConfig.DEBUG) {
+            getMenuInflater().inflate(R.menu.menu_debug, menu);
+        }
         return true;
     }
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
-        switch (item.getItemId()) {
-            case R.id.action_settings:
-                NotificationUtil.sendNotification(this);
-                return true;
-            case R.id.action_debug_move_to_settings:
-                Intent intent = NotificationUtil.createNotificationListenerSettingsIntent();
-                try {
-                    startActivity(intent);
-                } catch (ActivityNotFoundException e) {
-                    Log.e(TAG, "Matched activity not exist.");
-                }
-                return true;
-            case R.id.action_debug_send_notification_with_no_action:
-                NotificationUtil.sendNotificationNoAction(this);
-                return true;
+        if (BuildConfig.DEBUG) {
+            switch (item.getItemId()) {
+                case R.id.action_debug_issue_notification:
+                    NotificationUtil.sendNotification(this);
+                    return true;
+                case R.id.action_debug_issue_notification_no_action:
+                    NotificationUtil.sendNotificationNoAction(this);
+                    return true;
+                case R.id.action_debug_move_to_settings:
+                    Intent intent = NotificationUtil.createNotificationListenerSettingsIntent();
+                    try {
+                        startActivity(intent);
+                    } catch (ActivityNotFoundException e) {
+                        Log.e(TAG, "Matched activity not exist.");
+                    }
+                    return true;
+            }
         }
         return super.onOptionsItemSelected(item);
     }
