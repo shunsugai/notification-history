@@ -22,6 +22,8 @@ import android.view.MenuItem;
 import android.view.View;
 
 import com.crashlytics.android.Crashlytics;
+import com.google.android.gms.ads.AdRequest;
+import com.google.android.gms.ads.AdView;
 
 import net.ninterest.notification.model.NotificationItem;
 
@@ -52,11 +54,17 @@ public class MainActivity extends AppCompatActivity {
 
     private CoordinatorLayout mCoordinatorLayout;
 
+    private AdView mAdView;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         Fabric.with(this, new Crashlytics());
         setContentView(R.layout.activity_main);
+
+        mAdView = (AdView) findViewById(R.id.ad_view);
+        AdRequest adRequest = new AdRequest.Builder().build();
+        mAdView.loadAd(adRequest);
 
         mCoordinatorLayout = (CoordinatorLayout) findViewById(R.id.coordinator_layout);
 
@@ -72,6 +80,11 @@ public class MainActivity extends AppCompatActivity {
     @Override
     protected void onResume() {
         super.onResume();
+
+        if (mAdView != null) {
+            mAdView.resume();
+        }
+
         IntentFilter filter = new IntentFilter(ACTION_UPDATE);
         registerReceiver(mReceiver, filter);
 
@@ -93,8 +106,19 @@ public class MainActivity extends AppCompatActivity {
 
     @Override
     protected void onPause() {
+        if (mAdView != null) {
+            mAdView.pause();
+        }
         super.onPause();
         unregisterReceiver(mReceiver);
+    }
+
+    @Override
+    protected void onDestroy() {
+        if (mAdView != null) {
+            mAdView.destroy();
+        }
+        super.onDestroy();
     }
 
     @Override
