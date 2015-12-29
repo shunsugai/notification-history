@@ -4,6 +4,8 @@
     <!-- Menu: open application settings -->
     <string name="action_settings">Settings</string>
 
+    <string name="banner_ad_unit_id">ca-app-pub-7191458711960745/5078168315</string>
+
     <!-- DEBUG menu strings -->
     <!-- Menu: issue notification -->
     <string name="action_debug_issue_notification">notify</string>
