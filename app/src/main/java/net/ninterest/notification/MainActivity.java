@@ -67,9 +67,7 @@ public class MainActivity extends AppCompatActivity {
         Fabric.with(this, new Crashlytics());
         setContentView(R.layout.activity_main);
 
-        mAdView = (AdView) findViewById(R.id.ad_view);
-        AdRequest adRequest = new AdRequest.Builder().build();
-        mAdView.loadAd(adRequest);
+        initAdView();
 
         mCoordinatorLayout = (CoordinatorLayout) findViewById(R.id.coordinator_layout);
         mEmptyView = this.findViewById(R.id.textview_no_notifications);
@@ -92,21 +90,10 @@ public class MainActivity extends AppCompatActivity {
             mAdView.resume();
         }
 
+        showMessageIfNotificationServiceDisabled();
+
         IntentFilter filter = new IntentFilter(ACTION_UPDATE);
         registerReceiver(mReceiver, filter);
-
-        StatusBarNotification sbn = NotificationUtil.createWelcomeNotification(this);
-        NotificationItem notificationItem = new NotificationItem(sbn);
-
-        if (NotificationRecorderService.isEnabled(this)) {
-            int position = mNotifications.indexOf(notificationItem);
-            if (position >= 0) {
-                mNotifications.remove(position);
-            }
-        } else {
-            NotificationItemManager manager = NotificationItemManager.getInstance();
-            manager.addFirst(notificationItem);
-        }
 
         mAdapter.notifyDataSetChanged();
     }
@@ -116,8 +103,8 @@ public class MainActivity extends AppCompatActivity {
         if (mAdView != null) {
             mAdView.pause();
         }
-        super.onPause();
         unregisterReceiver(mReceiver);
+        super.onPause();
     }
 
     @Override
@@ -188,9 +175,7 @@ public class MainActivity extends AppCompatActivity {
                     public boolean onMove(RecyclerView recyclerView,
                                           RecyclerView.ViewHolder viewHolder,
                                           RecyclerView.ViewHolder target) {
-                        final int fromPos = viewHolder.getAdapterPosition();
-                        final int toPos = target.getAdapterPosition();
-                        mAdapter.notifyItemMoved(fromPos, toPos);
+                        // do nothing
                         return false;
                     }
 
@@ -269,6 +254,27 @@ public class MainActivity extends AppCompatActivity {
             mEmptyView.setVisibility(View.VISIBLE);
         } else {
             mEmptyView.setVisibility(View.GONE);
+        }
+    }
+
+    private void initAdView() {
+        mAdView = (AdView) findViewById(R.id.ad_view);
+        AdRequest adRequest = new AdRequest.Builder().build();
+        mAdView.loadAd(adRequest);
+    }
+
+    private void showMessageIfNotificationServiceDisabled() {
+        StatusBarNotification sbn = NotificationUtil.createWelcomeNotification(this);
+        NotificationItem notificationItem = new NotificationItem(sbn);
+
+        if (NotificationRecorderService.isEnabled(this)) {
+            int position = mNotifications.indexOf(notificationItem);
+            if (position >= 0) {
+                mNotifications.remove(position);
+            }
+        } else {
+            NotificationItemManager manager = NotificationItemManager.getInstance();
+            manager.addFirst(notificationItem);
         }
     }
 }
