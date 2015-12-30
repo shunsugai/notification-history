@@ -20,9 +20,9 @@
             android:layout_height="?attr/actionBarSize"
             android:background="?attr/colorPrimary"
             android:elevation="4dp"
-            app:title="@string/action_bar_title"
             app:popupTheme="@style/Theme.AppCompat.Light"
-            app:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar" />
+            app:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar"
+            app:title="@string/action_bar_title" />
 
         <android.support.v7.widget.RecyclerView
             android:id="@+id/main_recycler_view"
@@ -55,4 +55,3 @@
         ads:adSize="SMART_BANNER"
         ads:adUnitId="@string/banner_ad_unit_id" />
 </RelativeLayout>
-
