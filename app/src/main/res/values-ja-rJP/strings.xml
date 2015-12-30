@@ -3,6 +3,7 @@
     <string name="action_bar_title">通知の履歴</string>
     <!-- Menu: open application settings -->
     <string name="action_settings">設定</string>
+    <string name="action_clear_all">すべて削除</string>
 
     <string name="banner_ad_unit_id">ca-app-pub-7191458711960745/5078168315</string>
 
