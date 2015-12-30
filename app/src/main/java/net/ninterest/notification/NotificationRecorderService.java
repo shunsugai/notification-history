@@ -5,7 +5,6 @@ import android.content.Context;
 import android.provider.Settings;
 import android.service.notification.NotificationListenerService;
 import android.service.notification.StatusBarNotification;
-import android.util.Log;
 
 import net.ninterest.notification.model.NotificationItem;
 
@@ -25,6 +24,14 @@ public class NotificationRecorderService extends NotificationListenerService {
         mItemManager = NotificationItemManager.getInstance();
     }
 
+    @Override
+    public void onNotificationPosted(StatusBarNotification sbn) {
+        NotificationItem notification = new NotificationItem(sbn);
+        if (mItemManager.addFirst(notification)) {
+            sendBroadcast(MainActivity.createIntent());
+        }
+    }
+
     /**
      * Returns whether this NotificationListenerService is enabled or not.
      * @param c context
@@ -36,15 +43,5 @@ public class NotificationRecorderService extends NotificationListenerService {
                 Settings.Secure.getString(c.getContentResolver(), ENABLED_NOTIFICATION_LISTENERS);
         String thisService = c.getPackageName() + "/" + NotificationRecorderService.class.getName();
         return enabledServices != null && enabledServices.contains(thisService);
-    }
-
-    @Override
-    public void onNotificationPosted(StatusBarNotification sbn) {
-        Log.d(TAG, "onNotificationPosted() called");
-        Log.d(TAG, "sbn: " + sbn.toString());
-        NotificationItem notification = new NotificationItem(sbn);
-        if (mItemManager.addFirst(notification)) {
-            sendBroadcast(MainActivity.createIntent());
-        }
     }
 }
