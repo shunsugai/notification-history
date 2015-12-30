@@ -159,8 +159,6 @@ public class MainActivity extends AppCompatActivity {
 
     private void initToolbar() {
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
-        toolbar.setTitleTextColor(Color.WHITE);
-        toolbar.setTitle(R.string.action_bar_title);
         setSupportActionBar(toolbar);
     }
 
