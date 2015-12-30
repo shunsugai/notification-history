@@ -28,4 +28,5 @@
         下の「通知履歴を有効にする」ボタンを押して、設定画面で「通知履歴」を有効にしてください。
     </string>
     <string name="actions_click_to_enable">通知履歴を有効にする</string>
+    <string name="msg_no_notifications">通知はありません</string>
 </resources>
