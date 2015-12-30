@@ -9,7 +9,6 @@ import android.graphics.Color;
 import android.os.Bundle;
 import android.service.notification.StatusBarNotification;
 import android.support.design.widget.CoordinatorLayout;
-import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
@@ -79,7 +78,6 @@ public class MainActivity extends AppCompatActivity {
         registerObserver();
         initToolbar();
         initRecyclerView();
-        initFloatingActionButton();
     }
 
     @Override
@@ -123,6 +121,7 @@ public class MainActivity extends AppCompatActivity {
         if (BuildConfig.DEBUG) {
             getMenuInflater().inflate(R.menu.menu_debug, menu);
         }
+        getMenuInflater().inflate(R.menu.menu_main, menu);
         return true;
     }
 
@@ -145,6 +144,11 @@ public class MainActivity extends AppCompatActivity {
                     }
                     return true;
             }
+        }
+        switch (item.getItemId()) {
+            case R.id.action_clear_all:
+                clearAll();
+                return true;
         }
         return super.onOptionsItemSelected(item);
     }
@@ -200,29 +204,6 @@ public class MainActivity extends AppCompatActivity {
         itemDecor.attachToRecyclerView(recyclerView);
     }
 
-    private void initFloatingActionButton() {
-        FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.action_button);
-        fab.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                if (mNotifications.size() == 0) {
-                    return;
-                }
-                final List<NotificationItem> items = new ArrayList<>(mNotifications);
-                mAdapter.clearData();
-                Snackbar.make(mCoordinatorLayout, R.string.msg_all_items_deleted, Snackbar.LENGTH_SHORT)
-                        .setAction(R.string.action_undo, new View.OnClickListener() {
-                            @Override
-                            public void onClick(View v) {
-                                mNotifications.addAll(items);
-                                mAdapter.notifyDataSetChanged();
-                            }
-                        })
-                        .show();
-            }
-        });
-    }
-
     private void registerObserver() {
         mEmptyObserver = new RecyclerView.AdapterDataObserver() {
             @Override
@@ -276,5 +257,22 @@ public class MainActivity extends AppCompatActivity {
             NotificationItemManager manager = NotificationItemManager.getInstance();
             manager.addFirst(notificationItem);
         }
+    }
+
+    private void clearAll() {
+        if (mNotifications.size() == 0) {
+            return;
+        }
+        final List<NotificationItem> backups = new ArrayList<>(mNotifications);
+        mAdapter.clearData();
+        Snackbar.make(mCoordinatorLayout, R.string.msg_all_items_deleted, Snackbar.LENGTH_SHORT)
+                .setAction(R.string.action_undo, new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        mNotifications.addAll(backups);
+                        mAdapter.notifyDataSetChanged();
+                    }
+                })
+                .show();
     }
 }

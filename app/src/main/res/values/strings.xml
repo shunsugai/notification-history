@@ -3,6 +3,7 @@
     <string name="action_bar_title">Notification History</string>
     <!-- Menu: open application settings -->
     <string name="action_settings">Settings</string>
+    <string name="action_clear_all">Clear all</string>
 
     <string name="banner_ad_unit_id">ca-app-pub-7191458711960745/5078168315</string>
 
