@@ -25,6 +25,7 @@ import com.google.android.gms.ads.AdRequest;
 import com.google.android.gms.ads.AdView;
 
 import net.ninterest.notification.model.NotificationItem;
+import net.ninterest.notification.settings.SettingsActivity;
 
 import io.fabric.sdk.android.Fabric;
 
@@ -145,6 +146,10 @@ public class MainActivity extends AppCompatActivity {
             }
         }
         switch (item.getItemId()) {
+            case R.id.action_settings:
+                Intent i = new Intent(this, SettingsActivity.class);
+                startActivity(i);
+                return true;
             case R.id.action_clear_all:
                 clearAll();
                 return true;

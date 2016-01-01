@@ -8,4 +8,6 @@
     <dimen name="recycler_view_margin_top">56dp</dimen>
     <dimen name="floating_action_button_margin">16dp</dimen>
     <dimen name="no_notifications_font_size">18sp</dimen>
+    <dimen name="fab_margin">16dp</dimen>
+    <dimen name="settings_padding">0dp</dimen>
 </resources>
