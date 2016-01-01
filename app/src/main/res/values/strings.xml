@@ -28,4 +28,5 @@
         To record notifications, enable "Notification History" in "Notification access" settings.</string>
     <string name="actions_click_to_enable">click to enable</string>
     <string name="msg_no_notifications">No notifications</string>
+    <string name="title_activity_settings">Settings</string>
 </resources>
