@@ -192,8 +192,8 @@ public class MainActivity extends AppCompatActivity {
                         mNotifications.remove(fromPos);
                         mAdapter.notifyItemRemoved(fromPos);
                         Snackbar.make(mCoordinatorLayout,
-                                R.string.msg_one_item_deleted, Snackbar.LENGTH_SHORT)
-                                .setAction(R.string.action_undo, new View.OnClickListener() {
+                                R.string.one_item_deleted, Snackbar.LENGTH_SHORT)
+                                .setAction(R.string.undo, new View.OnClickListener() {
                                     @Override
                                     public void onClick(View v) {
                                         mNotifications.add(fromPos, backup);
@@ -267,8 +267,8 @@ public class MainActivity extends AppCompatActivity {
         }
         final List<NotificationItem> backups = new ArrayList<>(mNotifications);
         mAdapter.clearData();
-        Snackbar.make(mCoordinatorLayout, R.string.msg_all_items_deleted, Snackbar.LENGTH_SHORT)
-                .setAction(R.string.action_undo, new View.OnClickListener() {
+        Snackbar.make(mCoordinatorLayout, R.string.all_items_deleted, Snackbar.LENGTH_SHORT)
+                .setAction(R.string.undo, new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
                         mNotifications.addAll(backups);
