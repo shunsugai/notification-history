@@ -4,10 +4,13 @@ import android.app.Notification;
 import android.app.PendingIntent;
 import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.service.notification.StatusBarNotification;
 import android.util.Log;
 import android.view.View;
 import android.view.ViewGroup;
+
+import net.ninterest.notification.R;
 
 import java.util.Objects;
 
@@ -20,13 +23,18 @@ public class NotificationItem {
     private String mTitle;
     private String mText;
     private String mPackageName;
+    private Context mContext;
+    private SharedPreferences mSharedPrefs;
 
-    public NotificationItem(StatusBarNotification sbn) {
+    public NotificationItem(Context context, StatusBarNotification sbn) {
         mSbn = sbn;
         mNotif = sbn.getNotification();
         mTitle = (String) mNotif.extras.getCharSequence(Notification.EXTRA_TITLE);
         mText = (String) mNotif.extras.getCharSequence(Notification.EXTRA_TEXT);
         mPackageName = mSbn.getPackageName();
+        mContext = context;
+        mSharedPrefs = context.getSharedPreferences(
+                context.getString(R.string.shared_preferences_key), Context.MODE_PRIVATE);
     }
 
     /**
@@ -34,11 +42,15 @@ public class NotificationItem {
      * @return {@code true} valid.
      */
     public boolean isValid() {
-        boolean result = true;
+        boolean isValid = true;
         if (mSbn.isOngoing()) {
-            result = false;
+            isValid = false;
         }
-        return result;
+        boolean isExcluded = mSharedPrefs.getBoolean(mPackageName, false);
+        if (isExcluded) {
+            isValid = false;
+        }
+        return isValid;
     }
 
     /**

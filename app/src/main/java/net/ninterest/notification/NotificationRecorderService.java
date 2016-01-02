@@ -26,7 +26,7 @@ public class NotificationRecorderService extends NotificationListenerService {
 
     @Override
     public void onNotificationPosted(StatusBarNotification sbn) {
-        NotificationItem notification = new NotificationItem(sbn);
+        NotificationItem notification = new NotificationItem(getApplicationContext(), sbn);
         if (mItemManager.addFirst(notification)) {
             sendBroadcast(MainActivity.createIntent());
         }

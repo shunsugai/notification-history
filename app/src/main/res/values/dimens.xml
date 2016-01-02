@@ -10,4 +10,6 @@
     <dimen name="no_notifications_font_size">18sp</dimen>
     <dimen name="fab_margin">16dp</dimen>
     <dimen name="settings_padding">0dp</dimen>
+
+    <dimen name="exclude_app_icon_size">40dp</dimen>
 </resources>
