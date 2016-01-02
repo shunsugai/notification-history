@@ -1,35 +1,56 @@
 <resources>
-    <string name="app_name">notification</string>
-    <string name="action_bar_title">Notification History</string>
-    <!-- Menu: open application settings -->
-    <string name="action_settings">Settings</string>
-    <string name="action_clear_all">Clear all</string>
+    <!-- Name of the application, shown in the application's title bar. -->
+    <string name="app_name">Notification History</string>
 
-    <string name="banner_ad_unit_id">ca-app-pub-7191458711960745/5078168315</string>
+    <!-- Shown as the title of the notification history. -->
+    <string name="title_activity_main">Notification History</string>
 
-    <!-- DEBUG menu strings -->
-    <!-- Menu: issue notification -->
-    <string name="action_debug_issue_notification">notify</string>
-    <!-- Menu: Send notification for debugging -->
-    <string name="action_debug_send_notification_with_no_action">notify 2</string>
-    <!-- Menu: open Android Settings -->
-    <string name="action_debug_move_to_settings">notification access</string>
-
-    <!-- Toast message if there is no action in Notification -->
-    <string name="msg_no_action_associated">No action associated</string>
-    <!-- SnackBar message when an item is deleted -->
-    <string name="msg_one_item_deleted">1 Deleted</string>
-    <!-- SnackBar message when all items are cleared -->
-    <string name="msg_all_items_deleted">Deleted</string>
-    <!-- SnackBar action when all items are cleared -->
-    <string name="action_undo">UNDO</string>
-    <string name="title_settings_notification_access">Welcome to Notification History</string>
-    <string name="msg_settings_notification_access">Thank you for downloading Notification History.\n
-        To record notifications, enable "Notification History" in "Notification access" settings.</string>
-    <string name="actions_click_to_enable">click to enable</string>
-    <string name="msg_no_notifications">No notifications</string>
+    <!-- Shown as the title of the settings. -->
     <string name="title_activity_settings">Settings</string>
+
+    <!-- Shown as the title of the exclude applications settings. -->
     <string name="title_activity_exclude_settings">Exclude Applications</string>
 
-    <string name="shared_preferences_key">applicationSettings</string>
+    <!-- Menu item that brings up the application's Settings screen. -->
+    <string name="settings">Settings</string>
+
+    <!-- Menu item that allows the user to clear all notifications. -->
+    <string name="clear_all">Clear all</string>
+
+    <!-- Menu item that allows the developer to issue notification for debugging. -->
+    <string name="issue_notification">notify</string>
+
+    <!-- Menu item that allows the developer to issue notification for debugging. -->
+    <string name="issue_notification_with_no_action">notify 2</string>
+
+    <!-- Menu item that allows the developer to open notification access settings. -->
+    <string name="notification_access">Notification access</string>
+
+    <!-- Message that appears as feedback when the user has indicated notification item which has no action. -->
+    <string name="no_action_associated">No action associated</string>
+
+    <!-- Message that appears as feedback when the user has deleted a notification. -->
+    <string name="one_item_deleted">1 Deleted</string>
+
+    <!-- Message that appears as feedback when the user has deleted all notifications. -->
+    <string name="all_items_deleted">Deleted</string>
+
+    <!-- Label on a button that the user clicks to undo. -->
+    <string name="undo">UNDO</string>
+
+    <!-- Label on the welcome notification. -->
+    <string name="welcome">Welcome to Notification History</string>
+
+    <!-- Message on the welcome notification. -->
+    <string name="setup">Thank you for downloading Notification History.\n
+        To record notifications, enable "Notification History" in "Notification access" settings.</string>
+
+    <!-- Label on a button that the user clicks to open notification access settings. -->
+    <string name="click_to_enable">click to enable</string>
+
+    <!-- Message that appears on the background when there is notifications. -->
+    <string name="no_notifications">No notifications</string>
+
+    <!-- Label on a button that the user clicks to open exclude application settings. -->
+    <string name="exclude_settings">Exclude applications</string>
 </resources>

@@ -22,7 +22,7 @@
             android:elevation="4dp"
             app:popupTheme="@style/Theme.AppCompat.Light"
             app:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar"
-            app:title="@string/action_bar_title" />
+            app:title="@string/title_activity_main" />
 
         <android.support.v7.widget.RecyclerView
             android:id="@+id/main_recycler_view"
@@ -40,7 +40,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
-            android:text="@string/msg_no_notifications"
+            android:text="@string/no_notifications"
             android:textColor="@color/secondary_text"
             android:textSize="@dimen/no_notifications_font_size" />
     </android.support.design.widget.CoordinatorLayout>

@@ -5,16 +5,16 @@
     <item
         android:id="@+id/action_debug_issue_notification"
         android:orderInCategory="1000"
-        android:title="@string/action_debug_issue_notification"
+        android:title="@string/issue_notification"
         app:showAsAction="never" />
     <item
         android:id="@+id/action_debug_issue_notification_no_action"
         android:orderInCategory="2000"
-        android:title="@string/action_debug_send_notification_with_no_action"
+        android:title="@string/issue_notification_with_no_action"
         app:showAsAction="never" />
     <item
         android:id="@+id/action_debug_move_to_settings"
         android:orderInCategory="3000"
-        android:title="@string/action_debug_move_to_settings"
+        android:title="@string/notification_access"
         app:showAsAction="never" />
 </menu>

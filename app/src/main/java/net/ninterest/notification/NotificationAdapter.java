@@ -52,7 +52,7 @@ public class NotificationAdapter extends RecyclerView.Adapter<NotificationAdapte
             public void onClick(View v) {
                 if (!notification.execContentIntent(context)) {
                     Toast.makeText(
-                            context, R.string.msg_no_action_associated, Toast.LENGTH_SHORT).show();
+                            context, R.string.no_action_associated, Toast.LENGTH_SHORT).show();
                 }
             }
         });
