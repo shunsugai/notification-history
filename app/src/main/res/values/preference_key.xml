@@ -1,4 +1,4 @@
 <?xml version="1.0" encoding="utf-8"?>
-<resources>
-    <string name="shared_preferences_key">applicationSettings</string>
+<resources xmlns:tools="http://schemas.android.com/tools">
+    <string name="shared_preferences_key" tools:ignore="MissingTranslation">applicationSettings</string>
 </resources>
