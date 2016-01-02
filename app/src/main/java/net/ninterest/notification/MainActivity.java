@@ -248,7 +248,7 @@ public class MainActivity extends AppCompatActivity {
 
     private void showMessageIfNotificationServiceDisabled() {
         StatusBarNotification sbn = NotificationUtil.createWelcomeNotification(this);
-        NotificationItem notificationItem = new NotificationItem(sbn);
+        NotificationItem notificationItem = new NotificationItem(getApplicationContext(), sbn);
 
         if (NotificationRecorderService.isEnabled(this)) {
             int position = mNotifications.indexOf(notificationItem);
