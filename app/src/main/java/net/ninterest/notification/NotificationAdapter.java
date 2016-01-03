@@ -45,12 +45,12 @@ public class NotificationAdapter extends RecyclerView.Adapter<NotificationAdapte
         holder.frameLayout.removeAllViews();
 
         final NotificationItem notification = items.get(position);
-        View notifView = notification.getContentView(context, parent);
+        View notifView = notification.getContentView(parent);
         holder.frameLayout.addView(notifView);
         holder.frameLayout.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if (!notification.execContentIntent(context)) {
+                if (!notification.execContentIntent()) {
                     Toast.makeText(
                             context, R.string.no_action_associated, Toast.LENGTH_SHORT).show();
                 }
