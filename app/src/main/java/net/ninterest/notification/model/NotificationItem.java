@@ -6,7 +6,6 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.service.notification.StatusBarNotification;
-import android.util.Log;
 import android.view.View;
 import android.view.ViewGroup;
 
@@ -62,14 +61,12 @@ public class NotificationItem {
         Objects.requireNonNull(context, "context cannot be null");
         PendingIntent pendingIntent = mNotif.contentIntent;
         if (pendingIntent == null) {
-            Log.w(TAG, "pending intent is not set");
             return false;
         }
         Intent intent = new Intent();
         try {
             pendingIntent.send(context, 0, intent);
         } catch (PendingIntent.CanceledException e) {
-            Log.w(TAG, "failed", e);
             return false;
         }
         return true;
