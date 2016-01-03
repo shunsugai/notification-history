@@ -11,8 +11,6 @@ import android.view.ViewGroup;
 
 import net.ninterest.notification.R;
 
-import java.util.Objects;
-
 public class NotificationItem {
 
     private static final String TAG = NotificationItem.class.getSimpleName();
@@ -54,18 +52,16 @@ public class NotificationItem {
 
     /**
      * Executes notification's action.
-     * @param context
      * @return {@code true} execution succeeded.
      */
-    public boolean execContentIntent(Context context) {
-        Objects.requireNonNull(context, "context cannot be null");
+    public boolean execContentIntent() {
         PendingIntent pendingIntent = mNotif.contentIntent;
         if (pendingIntent == null) {
             return false;
         }
         Intent intent = new Intent();
         try {
-            pendingIntent.send(context, 0, intent);
+            pendingIntent.send(mContext, 0, intent);
         } catch (PendingIntent.CanceledException e) {
             return false;
         }
@@ -75,17 +71,15 @@ public class NotificationItem {
     /**
      * Returns notification's content view.
      * Returns big content view if the notification has it.
-     * @param context
      * @param parent
      * @return
      */
-    public View getContentView(Context context, ViewGroup parent) {
-        Objects.requireNonNull(context, "context cannot be null");
+    public View getContentView(ViewGroup parent) {
         View notifView;
         if (mNotif.bigContentView == null) {
-            notifView = mNotif.contentView.apply(context, parent);
+            notifView = mNotif.contentView.apply(mContext, parent);
         } else {
-            notifView = mNotif.bigContentView.apply(context, parent);
+            notifView = mNotif.bigContentView.apply(mContext, parent);
         }
         return notifView;
     }
