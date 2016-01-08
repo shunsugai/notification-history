@@ -22,4 +22,9 @@
         android:orderInCategory="400"
         android:title="@string/faq"
         app:showAsAction="never" />
+    <item
+        android:id="@+id/action_switch"
+        app:actionViewClass="android.widget.Switch"
+        app:showAsAction="always"
+        android:title="" />
 </menu>

@@ -30,6 +30,10 @@ public class NotificationRecorderService extends NotificationListenerService {
         if (mItemManager.addFirst(notification)) {
             sendBroadcast(MainActivity.createIntent());
         }
+        StatusBarCleaner cleaner = new StatusBarCleaner(this);
+        if (cleaner.isRunning()) {
+            cancelAllNotifications();
+        }
     }
 
     /**

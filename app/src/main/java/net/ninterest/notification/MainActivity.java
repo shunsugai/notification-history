@@ -19,11 +19,14 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.animation.AlphaAnimation;
+import android.widget.CompoundButton;
+import android.widget.Switch;
 
 import com.crashlytics.android.Crashlytics;
 import com.google.android.gms.ads.AdRequest;
 import com.google.android.gms.ads.AdView;
 import com.helpshift.support.Support;
+import com.squareup.otto.Subscribe;
 
 import net.ninterest.notification.model.NotificationItem;
 import net.ninterest.notification.settings.SettingsActivity;
@@ -38,6 +41,10 @@ public class MainActivity extends AppCompatActivity {
     private static final String TAG = MainActivity.class.getSimpleName();
 
     private static final String ACTION_UPDATE = "net.ninterest.notification.ACTION_UPDATE";
+
+    private static final String STATE_CHECKED = "net.ninterest.notification.STATE_CHECKED";
+
+    private static final String TAG_DIALOG = "net.ninterest.notification.TAG_DIALOG";
 
     private BroadcastReceiver mReceiver = new BroadcastReceiver() {
         @Override
@@ -61,6 +68,12 @@ public class MainActivity extends AppCompatActivity {
 
     private View mEmptyView;
 
+    private Switch mSwitch;
+
+    private StatusBarCleaner mStatusBarCleaner;
+
+    private boolean mIsChecked;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -79,11 +92,18 @@ public class MainActivity extends AppCompatActivity {
         registerObserver();
         initToolbar();
         initRecyclerView();
+
+        mStatusBarCleaner = new StatusBarCleaner(this);
+        if (savedInstanceState != null) {
+            mIsChecked = savedInstanceState.getBoolean(STATE_CHECKED);
+        }
     }
 
     @Override
     protected void onResume() {
         super.onResume();
+
+        BusHolder.get().register(this);
 
         if (mAdView != null) {
             mAdView.resume();
@@ -103,6 +123,9 @@ public class MainActivity extends AppCompatActivity {
             mAdView.pause();
         }
         unregisterReceiver(mReceiver);
+
+        BusHolder.get().unregister(this);
+
         super.onPause();
     }
 
@@ -123,6 +146,24 @@ public class MainActivity extends AppCompatActivity {
             getMenuInflater().inflate(R.menu.menu_debug, menu);
         }
         getMenuInflater().inflate(R.menu.menu_main, menu);
+
+        final MenuItem item = menu.findItem(R.id.action_switch);
+        mSwitch = (Switch) item.getActionView();
+        StatusBarCleaner cleaner = new StatusBarCleaner(this);
+        mSwitch.setChecked(cleaner.isRunning() || mIsChecked);
+        mSwitch.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+                if (isChecked) {
+                    ConfirmationDialog dialog = new ConfirmationDialog();
+                    dialog.show(getSupportFragmentManager(), TAG_DIALOG);
+                } else {
+                    mStatusBarCleaner.stop();
+                    Snackbar.make(mCoordinatorLayout,
+                            R.string.notification_canceler_disabled, Snackbar.LENGTH_SHORT).show();
+                }
+            }
+        });
         return true;
     }
 
@@ -162,6 +203,28 @@ public class MainActivity extends AppCompatActivity {
                 return true;
         }
         return super.onOptionsItemSelected(item);
+    }
+
+    @Override
+    protected void onSaveInstanceState(Bundle outState) {
+        outState.putBoolean(STATE_CHECKED, mSwitch.isChecked());
+        super.onSaveInstanceState(outState);
+    }
+
+    @Subscribe
+    public void onConfirmationDialogClicked(ConfirmationDialog.Event event) {
+        switch (event) {
+            case OK:
+                mStatusBarCleaner.start();
+                Snackbar.make(mCoordinatorLayout,
+                        R.string.notification_canceler_enabled, Snackbar.LENGTH_SHORT).show();
+                break;
+            case CANCEL:
+                mSwitch.setChecked(false);
+                break;
+            default:
+                throw new RuntimeException();
+        }
     }
 
     public static Intent createIntent() {
