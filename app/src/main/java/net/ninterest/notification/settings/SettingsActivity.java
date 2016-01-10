@@ -1,13 +1,18 @@
 package net.ninterest.notification.settings;
 
 import android.os.Bundle;
-import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.MenuItem;
 
+import net.ninterest.notification.BaseActivity;
 import net.ninterest.notification.R;
 
-public class SettingsActivity extends AppCompatActivity {
+public class SettingsActivity extends BaseActivity {
+
+    @Override
+    protected String getScreenName() {
+        return SettingsActivity.class.getSimpleName();
+    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

@@ -32,6 +32,9 @@ dependencies {
         transitive = true;
     }
     compile 'com.helpshift:android-aar:4.2.0-support'
+    compile "com.mixpanel.android:mixpanel-android:4.6.4"
+    compile "com.google.android.gms:play-services-base:8.4.0"
+    compile "com.google.android.gms:play-services-gcm:8.4.0"
 }
 buildscript {
     dependencies {
