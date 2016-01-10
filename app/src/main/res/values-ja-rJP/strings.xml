@@ -35,6 +35,25 @@
     <!-- Message that appears as feedback when the user has deleted all notifications. -->
     <string name="all_items_deleted">すべて削除しました</string>
 
+    <!-- Title in the dialog allows the user to dismiss all notifications. -->
+    <string name="allows_notification_canceler">
+        通知を自動的に削除しますか？
+    </string>
+
+    <!-- Message shown in the dialog allows the user to dismiss all notifications. -->
+    <string name="confirm_notification_canceler_enabled">
+        通知のキャンセル機能を有効にすると、届いた通知を自動的に削除するようになります。
+    </string>
+
+    <!-- Message that appears as feedback when the user has turned notification canceler on. -->
+    <string name="notification_canceler_enabled">通知のキャンセル機能が有効になりました。</string>
+
+    <!-- Message that appears as feedback when the user has turned notification canceler off. -->
+    <string name="notification_canceler_disabled">通知のキャンセル機能が解除されました。</string>
+
+    <!-- Message shown in the notification displayed during notification canceler enabled. -->
+    <string name="notification_dismissed">通知は自動的に削除されます。</string>
+
     <!-- Label on a button that the user clicks to undo. -->
     <string name="undo">元に戻す</string>
 

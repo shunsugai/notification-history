@@ -18,6 +18,8 @@ public class NotificationUtil {
     private static final String ACTION_NOTIFICATION_LISTENER_SETTINGS
             = "android.settings.ACTION_NOTIFICATION_LISTENER_SETTINGS";
 
+    private static final int NOTIFICATION_CLEAR_BAR_ENABLED = 123456;
+
     private NotificationUtil() {
     }
 
@@ -41,6 +43,35 @@ public class NotificationUtil {
                 (NotificationManager) context.getSystemService(Context.NOTIFICATION_SERVICE);
         m.notify(notificationId, builder.build());
         notificationId++;
+    }
+
+    public static void notifyCleanBarEnabled(Context context) {
+        Intent resultIntent = new Intent(context, MainActivity.class);
+        PendingIntent resultPendingIntent =
+                PendingIntent.getActivity(
+                        context,
+                        0,
+                        resultIntent,
+                        PendingIntent.FLAG_UPDATE_CURRENT
+                );
+        NotificationCompat.Builder builder = new NotificationCompat.Builder(context)
+                .setContentIntent(resultPendingIntent)
+                .setSmallIcon(R.drawable.ic_stat_transparent)
+                .setContentTitle(context.getString(R.string.notification_canceler_enabled))
+                .setContentText(context.getString(R.string.notification_dismissed))
+                .setOngoing(true);
+        if (Build.VERSION.SDK_INT > Build.VERSION_CODES.JELLY_BEAN) {
+            builder.setPriority(Notification.PRIORITY_MIN);
+        }
+        NotificationManager m =
+                (NotificationManager) context.getSystemService(Context.NOTIFICATION_SERVICE);
+        m.notify(NOTIFICATION_CLEAR_BAR_ENABLED, builder.build());
+    }
+
+    public static void cancelCleanBarNotification(Context context) {
+        NotificationManager m =
+                (NotificationManager) context.getSystemService(Context.NOTIFICATION_SERVICE);
+        m.cancel(NOTIFICATION_CLEAR_BAR_ENABLED);
     }
 
     public static void sendNotificationNoAction(Context context) {
