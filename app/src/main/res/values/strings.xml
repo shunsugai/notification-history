@@ -53,4 +53,10 @@
 
     <!-- Label on a button that the user clicks to open exclude application settings. -->
     <string name="exclude_settings">Exclude applications</string>
+
+    <!-- Menu item that allows the user to send feedback. -->
+    <string name="feedback">Feedback</string>
+
+    <!-- Menu item that allows the user to display FAQ. -->
+    <string name="faq">Help</string>
 </resources>
