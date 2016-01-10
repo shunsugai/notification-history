@@ -31,6 +31,7 @@ dependencies {
     compile('com.crashlytics.sdk.android:crashlytics:2.5.5@aar') {
         transitive = true;
     }
+    compile 'com.helpshift:android-aar:4.2.0-support'
 }
 buildscript {
     dependencies {

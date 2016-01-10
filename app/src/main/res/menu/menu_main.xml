@@ -12,4 +12,14 @@
         android:orderInCategory="200"
         android:title="@string/clear_all"
         app:showAsAction="never" />
+    <item
+        android:id="@+id/action_feedback"
+        android:orderInCategory="300"
+        android:title="@string/feedback"
+        app:showAsAction="never" />
+    <item
+        android:id="@+id/action_faq"
+        android:orderInCategory="400"
+        android:title="@string/faq"
+        app:showAsAction="never" />
 </menu>

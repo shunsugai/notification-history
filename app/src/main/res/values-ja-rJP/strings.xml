@@ -56,4 +56,10 @@
 
     <!-- Label on a button that the user clicks to open exclude application settings. -->
     <string name="exclude_settings">特定のアプリを除外する</string>
+
+    <!-- Menu item that allows the user to send feedback. -->
+    <string name="feedback">ご質問・ご要望</string>
+
+    <!-- Menu item that allows the user to display FAQ. -->
+    <string name="faq">ヘルプ</string>
 </resources>

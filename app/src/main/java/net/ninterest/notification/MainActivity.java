@@ -23,14 +23,15 @@ import android.view.animation.AlphaAnimation;
 import com.crashlytics.android.Crashlytics;
 import com.google.android.gms.ads.AdRequest;
 import com.google.android.gms.ads.AdView;
+import com.helpshift.support.Support;
 
 import net.ninterest.notification.model.NotificationItem;
 import net.ninterest.notification.settings.SettingsActivity;
 
-import io.fabric.sdk.android.Fabric;
-
 import java.util.ArrayList;
 import java.util.List;
+
+import io.fabric.sdk.android.Fabric;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -152,6 +153,12 @@ public class MainActivity extends AppCompatActivity {
                 return true;
             case R.id.action_clear_all:
                 clearAll();
+                return true;
+            case R.id.action_feedback:
+                Support.showConversation(this);
+                return true;
+            case R.id.action_faq:
+                Support.showFAQs(this);
                 return true;
         }
         return super.onOptionsItemSelected(item);

@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources xmlns:tools="http://schemas.android.com/tools">
+    <string name="helpshift_api_key" tools:ignore="MissingTranslation">ae3cb5210609d3a922c4dd249d160501</string>
+    <string name="helpshift_domein" tools:ignore="MissingTranslation">shunsugai.helpshift.com</string>
+    <string name="helpshift_app_id" tools:ignore="MissingTranslation">shunsugai_platform_20160110065143959-bd9b14a44d98197</string>
+</resources>
