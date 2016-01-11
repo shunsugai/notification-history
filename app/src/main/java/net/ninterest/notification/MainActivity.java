@@ -9,7 +9,6 @@ import android.os.Bundle;
 import android.service.notification.StatusBarNotification;
 import android.support.design.widget.CoordinatorLayout;
 import android.support.design.widget.Snackbar;
-import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
@@ -33,7 +32,7 @@ import java.util.List;
 
 import io.fabric.sdk.android.Fabric;
 
-public class MainActivity extends AppCompatActivity {
+public class MainActivity extends BaseActivity {
 
     private static final String TAG = MainActivity.class.getSimpleName();
 
@@ -60,6 +59,11 @@ public class MainActivity extends AppCompatActivity {
     private RecyclerView.AdapterDataObserver mEmptyObserver;
 
     private View mEmptyView;
+
+    @Override
+    protected String getScreenName() {
+        return MainActivity.class.getSimpleName();
+    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -146,20 +150,28 @@ public class MainActivity extends AppCompatActivity {
                     return true;
             }
         }
+        String menu = null;
         switch (item.getItemId()) {
             case R.id.action_settings:
                 Intent i = new Intent(this, SettingsActivity.class);
                 startActivity(i);
-                return true;
+                menu = getString(R.string.settings);
+                break;
             case R.id.action_clear_all:
                 clearAll();
-                return true;
+                menu = getString(R.string.clear_all);
+                break;
             case R.id.action_feedback:
                 Support.showConversation(this);
-                return true;
+                menu = getString(R.string.feedback);
+                break;
             case R.id.action_faq:
                 Support.showFAQs(this);
-                return true;
+                menu = getString(R.string.faq);
+                break;
+        }
+        if (menu != null) {
+            mMixpanel.trackMenu(menu);
         }
         return super.onOptionsItemSelected(item);
     }

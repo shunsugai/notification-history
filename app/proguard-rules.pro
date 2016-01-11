@@ -16,3 +16,6 @@
 #   public *;
 #}
 -keep class android.support.v4.** { *; }
+
+# configuration to work with Mixpanel
+-dontwarn com.mixpanel.**

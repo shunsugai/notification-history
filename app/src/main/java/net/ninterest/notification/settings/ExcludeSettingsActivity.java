@@ -4,7 +4,6 @@ import android.content.Context;
 import android.content.SharedPreferences;
 import android.content.pm.ApplicationInfo;
 import android.content.pm.PackageManager;
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
 import android.view.MenuItem;
@@ -14,13 +13,19 @@ import android.widget.BaseAdapter;
 import android.widget.CheckBox;
 import android.widget.ListView;
 
+import net.ninterest.notification.BaseActivity;
 import net.ninterest.notification.R;
 
 import java.util.Collections;
 import java.util.Comparator;
 import java.util.List;
 
-public class ExcludeSettingsActivity extends AppCompatActivity {
+public class ExcludeSettingsActivity extends BaseActivity {
+
+    @Override
+    protected String getScreenName() {
+        return ExcludeSettingsActivity.class.getSimpleName();
+    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
