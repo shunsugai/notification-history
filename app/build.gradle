@@ -14,7 +14,26 @@ android {
         versionName "0.0.3"
     }
     buildTypes {
+        debug {
+            // AdMob
+            resValue "string", "banner_ad_unit_id", "\"${getProperty("dummyBannerAdUnitId")}\""
+            // Helpshift
+            resValue "string", "helpshift_api_key", "\"${getProperty("helpshiftApiKey")}\""
+            resValue "string", "helpshift_domein", "\"${getProperty("helpshiftDomain")}\""
+            resValue "string", "helpshift_app_id", "\"${getProperty("helpshiftAppId")}\""
+            // Mixpanel
+            resValue "string", "mixpanel_api_token", "\"${getProperty("mixpanelApiToken")}\""
+        }
         release {
+            // AdMob
+            resValue "string", "banner_ad_unit_id", "\"${getProperty("bannerAdUnitId")}\""
+            // Helpshift
+            resValue "string", "helpshift_api_key", "\"${getProperty("helpshiftApiKey")}\""
+            resValue "string", "helpshift_domein", "\"${getProperty("helpshiftDomain")}\""
+            resValue "string", "helpshift_app_id", "\"${getProperty("helpshiftAppId")}\""
+            // Mixpanel
+            resValue "string", "mixpanel_api_token", "\"${getProperty("mixpanelApiToken")}\""
+
             minifyEnabled true
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
         }

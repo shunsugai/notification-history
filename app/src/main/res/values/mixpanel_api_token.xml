@@ -1,4 +1,0 @@
-<?xml version="1.0" encoding="utf-8"?>
-<resources xmlns:tools="http://schemas.android.com/tools">
-    <string name="mixpanel_api_token" tools:ignore="MissingTranslation">854f79a87c99cec48bbb33c395346586</string>
-</resources>
